@@ -1,5 +1,6 @@
-from fastapi import FastAPI
-app = fastAPI()
-@app.get("/")
-def home():
-    return {"message":"LRU Cache Backend is running"};
+class Node:
+    def __init__(self,key,value):
+        self.key = key
+        self.value = value
+        self.prev = None
+        self.next = None
