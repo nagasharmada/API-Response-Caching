@@ -1,24 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import Navbar from "./components/Navbar";
+import Search from "./components/Search";
+import Result from "./components/Result";
+import Stats from "./components/Stats";
 
 function App() {
+  const [result, setResult] = useState(null);
+
+  const handleSearch = async (query) => {
+    const start = performance.now();
+    const res = await fetch(`http://127.0.0.1:8000/data?q=${query}`);
+    const data = await res.json();
+    const end = performance.now();
+
+    setResult({
+      ...data,
+      time: Math.round(end - start)
+    });
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Navbar />
+      <Search onSearch={handleSearch} />
+      <Result result={result} />
+      <Stats />
+    </>
   );
 }
 
