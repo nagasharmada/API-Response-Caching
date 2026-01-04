@@ -20,3 +20,11 @@ def get_data(q:str):
         "source":"fresh",
         "data":result
     }
+@router.get("/cache/stats")
+def cache_stats():
+    return {
+        "capacity": cache.capacity,
+        "current_size": len(cache.cache),
+        "hits": cache.hits,
+        "misses": cache.misses
+    }
